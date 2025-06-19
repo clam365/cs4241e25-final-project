@@ -1,12 +1,5 @@
 # Final Project
 
-[Example Projects from A23](https://echo360.org/collection/50a4d343-caea-4deb-93ee-61bdd7da543f/public)
-
-**More Example Projects:**
-- [https://pushbox.glitch.me/app](https://pushbox.glitch.me/app)
-- [https://github.com/Cather-Zhang/final_project](https://github.com/Cather-Zhang/final_project)
-- [https://clip.kmoene.com/](https://clip.kmoene.com/)
-- [https://github.com/GP2P/G3P-Expense-Tracker](https://github.com/GP2P/G3P-Expense-Tracker)
 
 For your final project, you'll implement a web application that exhibits understanding of the course materials. 
 This project should provide an opportunity to both be creative and to pursue individual research and learning goals.
@@ -49,8 +42,5 @@ Think of 1, 3, and 4 in particular in a similar vein to the design / technical a
 
 The video described above is also due on Canvas at this time.
 
-## FAQs
 
-**Can I use XYZ framework?** 
 
-You can use any web-based frameworks or tools available, but for your server programming you need to use Node.js. Your client-side scripting language should be either JavaScript or TypeScript. Note that the staff may not be able to assist with TypeScript questions.
