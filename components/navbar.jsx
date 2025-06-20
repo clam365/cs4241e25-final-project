@@ -12,7 +12,7 @@ export const Navbar = () => {
     return(
         <div className={"flex justify-evenly  p-6 md:p-10  items-center"}>
             <Link href={"/"} >
-                <h1 className={"font-bold text-xl"}>northstar</h1>
+                <h1 className={"font-bold text-xl"}>northstar.co</h1>
             </Link>
             <Link href={"/order"} className={onPage("/order")}>order</Link>
             <Link href={"/about"} className={onPage("/about")}>about</Link>
