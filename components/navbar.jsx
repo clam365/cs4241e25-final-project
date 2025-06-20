@@ -14,9 +14,9 @@ export const Navbar = () => {
             <Link href={"/"} >
                 <h1 className={"font-bold text-xl text-midnightBlack"}>northstar.co</h1>
             </Link>
-            <Link href={"#order"} className={onPage("#order")}>order</Link>
+            <Link href={"/#order"} className={onPage("/#order")}>order</Link>
             <Link href={"/about"} className={onPage("/about")}>about</Link>
-            <Link href={"#contact"} className={onPage("#contact")}>contact</Link>
+            <Link href={"/#contact"} className={onPage("/#contact")}>contact</Link>
             <Link href={"/login"} className={`flex items-center gap-x-2 ${onPage("/login")}`}><CircleUserRound className={"hidden md:block"}/>login</Link>
         </div>
     )

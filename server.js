@@ -74,7 +74,7 @@ nextApp.prepare().then(() => {
                 return res.status(500).json({error: "Orders collection not found"});
             }
 
-            const orders = await ordersCollection.toArray();
+            const orders = await ordersCollection.find({}).toArray();
             res.status(200).json(orders);
         } catch (err) {
             console.error("Error getting drink orders");
