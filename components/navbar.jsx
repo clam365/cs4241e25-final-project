@@ -12,11 +12,11 @@ export const Navbar = () => {
     return(
         <div className={"flex justify-evenly  p-6 md:p-10  items-center"}>
             <Link href={"/"} >
-                <h1 className={"font-bold text-xl"}>northstar.co</h1>
+                <h1 className={"font-bold text-xl text-midnightBlack"}>northstar.co</h1>
             </Link>
-            <Link href={"/order"} className={onPage("/order")}>order</Link>
+            <Link href={"#order"} className={onPage("#order")}>order</Link>
             <Link href={"/about"} className={onPage("/about")}>about</Link>
-            <Link href={"#contact"} className={onPage("/#contact")}>contact</Link>
+            <Link href={"#contact"} className={onPage("#contact")}>contact</Link>
             <Link href={"/login"} className={`flex items-center gap-x-2 ${onPage("/login")}`}><CircleUserRound className={"hidden md:block"}/>login</Link>
         </div>
     )

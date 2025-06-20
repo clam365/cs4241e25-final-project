@@ -9,10 +9,11 @@ module.exports = {
     extend: {
       colors: {
         matchaGreen: '#4E6813',
-        midnightBlack: '#090F15',
+        midnightBlack: '#333333',
         boxBackground: '#F2f2f2',
         richEarthBrown: '#8A7356',
-        deepExpressoClay: '#5B4C3A'
+        deepExpressoClay: '#5B4C3A',
+        hoverDeepExpressoClay: '#504538'
       }
     },
   },
