@@ -1,7 +1,5 @@
 const next = require('next');
 const express = require("express");
-const cookie = require("cookie-session");
-const {MongoClient, ServerApiVersion} = require("mongodb");
 const dev = process.env.NODE_ENV !== 'production';
 const nextApp = next({dev});
 const handle = nextApp.getRequestHandler();
@@ -25,7 +23,7 @@ nextApp.prepare().then(() => {
         if (req.session.login === true || req.path.startsWith('/css') || req.path.startsWith('/'))
             next()
         else
-            res.sendFile(__dirname + '/app/page.js')
+            res.redirect("/login")
     })
 
     // serve up static files in the directory public,
@@ -68,6 +66,55 @@ nextApp.prepare().then(() => {
     }
 
     run().catch(console.dir);
+
+    //taken from using.cookies.md from Joshua Cuneo
+    app.post('/login', async (req, res) => {
+        try {
+            const {username, password} = req.body;
+            if (!usersCollection) {
+                console.log("User Collection not found")
+                return res.status(500).json({error: "No user collection found"});
+            }
+
+            //Find the user in db that the person entered in the input fields
+            const user = await usersCollection.findOne({username});
+            console.log("User found:", user)
+
+            //Password and Username Check
+            if (user && user.password === password) {
+                console.log("Logged in Successfully");
+                req.session.login = true;
+                req.session.userId = user._id.toString();
+                console.log("Session:", req.session)
+
+                return res.status(200).json({success: true, message: "Login successful", redirect: "/admin"
+                });
+            } else { //failed password check
+                return res.status(401).json({success: false, message: "Wrong username or password"
+                });
+            }
+        }
+            //The username is not found, this is redirect
+        catch (err) {
+            return res.status(500).json({success: false,
+                message: "Account not found. "
+            });        }
+    })
+
+    //Log out
+    app.get('/logout', (req, res) => {
+        req.session = null;
+        res.redirect('/');
+    });
+
+    //Understand our session, so that we can grab the person for navbar
+    app.get('/session', (req, res) => {
+        if (req.session && req.session.login) {
+            res.json({ loggedIn: true, userId: req.session.userId });
+        } else {
+            res.json({ loggedIn: false });
+        }
+    });
 
     //Get Request for orders
     app.get('/orders', async (req, res) => {
