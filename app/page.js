@@ -82,7 +82,7 @@ export const DrinkItem = ({drink}) => {
     return (
         <div>
             {/* image from https://www.freepik.com/free-ai-image/delicious-matcha-tea-scene_358281285.htm#fromView=keyword&page=1&position=4&uuid=090c6e9d-da5c-44d4-8a75-6f9f95ea2867&query=Matcha+Latte+Png*/}
-            <img src={drink.image || "/matchaMockup.jpg"} alt={drink.drinkType || "drink"} height={750} width={500}/>
+            <Image src={drink.image || "/matchaMockup.jpg"} alt={drink.drinkType || "drink"} height={500} width={400} className={"w-[750] h-[500px] object-cover"}/>
             <h1 className={" text-xl mt-4"}>{drink.drinkType}</h1>
             <p className={"text-gray-400"}>${drink.price?.toFixed(2)}</p>
             <div className={"justify-center flex mt-4"}>

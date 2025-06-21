@@ -2,6 +2,7 @@
 import {Table, Checkbox} from "@radix-ui/themes";
 import {useEffect, useState} from "react";
 import dayjs from "dayjs";
+import Analytics from "@/components/analytics";
 
 export default function Page() {
     //because we are using RadixUI, we cant just use DOM. We instead will use this to map it out in the actual component from here
@@ -50,7 +51,7 @@ export default function Page() {
 
     return(
         <div className={"flex flex-col justify-center"}>
-            <Table.Root className={"mt-10 w-1/2 m-auto"}>
+            <Table.Root className={"mt-10 w-[80%] md:w-[65%] lg:w-1/2 m-auto"}>
                 <Table.Header className={"bg-[#f2f2f2] "}>
                     <Table.Row>
                         <Table.ColumnHeaderCell>First Name</Table.ColumnHeaderCell>
@@ -81,6 +82,8 @@ export default function Page() {
 
                 </Table.Body>
             </Table.Root>
+            <div className={"mt-10"}></div>
+            <Analytics/>
         </div>
     )
 }
