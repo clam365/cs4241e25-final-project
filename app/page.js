@@ -27,6 +27,7 @@ export default function Home() {
 
 export const DrinkItem = ({drink}) => {
     const [submitting, setSubmitting] = useState(false);
+    const [open, setOpen] = useState(false); //this is to close the dialog when a form is submitted
     const router = useRouter();
 
     const handleSubmit = async (e) => {
@@ -59,6 +60,7 @@ export const DrinkItem = ({drink}) => {
                 alert('Thank you for your order! We will call your name shortly for your order. -Chris');
                 //Reset form
                 e.target.reset();
+                setOpen(false);
             }
             else {
                 const error = await response.json();
@@ -82,7 +84,7 @@ export const DrinkItem = ({drink}) => {
             <h1 className={" text-xl mt-4"}>{drink.drinkType}</h1>
             <p className={"text-gray-400"}>${drink.price?.toFixed(2)}</p>
             <div className={"justify-center flex mt-4"}>
-                <Dialog.Root>
+                <Dialog.Root open={open} onOpenChange={setOpen}>
                     <Dialog.Trigger>
                         <Button
                             className={"bg-deepExpressoClay hover:bg-hoverDeepExpressoClay text-xl p-6 px-8 rounded-full cursor-pointer "}>order</Button>
