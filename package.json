@@ -17,6 +17,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cookie-session": "^2.1.0",
+    "dayjs": "^1.11.13",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "lucide-react": "^0.517.0",

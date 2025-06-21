@@ -46,6 +46,7 @@ nextApp.prepare().then(() => {
 
     //Initialize our collections in our database
     let ordersCollection = null;
+    let analyticsCollection = null;
     let usersCollection = null;
 
     //Run MongoDB
@@ -56,6 +57,7 @@ nextApp.prepare().then(() => {
             // Send a ping to confirm a successful connection
             await client.db("admin").command({ping: 1});
             ordersCollection = client.db("northstar").collection("orders");
+            analyticsCollection = client.db("northstar").collection("analytics");
             usersCollection = client.db('northstar').collection("user");
 
             console.log("Pinged your deployment. You successfully connected to MongoDB!");
@@ -67,7 +69,7 @@ nextApp.prepare().then(() => {
 
     run().catch(console.dir);
 
-    //Get Request
+    //Get Request for orders
     app.get('/orders', async (req, res) => {
         try {
             if (!ordersCollection) {
@@ -82,7 +84,22 @@ nextApp.prepare().then(() => {
         }
     })
 
-    //Post Request
+    // Get Request for analytics
+    app.get('/analytics', async (req, res) => {
+        try {
+            if (!analyticsCollection) {
+                return res.status(500).json({error: "Analytics collection not found"});
+            }
+
+            const analytics = await analyticsCollection.find({}).toArray();
+            res.status(200).json(analytics);
+        } catch (err) {
+            console.error("Error getting analytics data");
+            res.status(500).json({error: "Error getting analytics data"});
+        }
+    });
+
+    //Post Request (ALSO saves to analytics)
     app.post('/orders', async (req, res) => {
         console.log("POST /orders received:", req.body);
         try {
@@ -90,12 +107,19 @@ nextApp.prepare().then(() => {
                 return res.status(500).json({error: "Orders collection not found"});
             }
 
-            ordersCollection = client.db("northstar").collection("orders"); //grab our collection of orders
             const newEntry = req.body;
+            const result = await ordersCollection.insertOne(newEntry); //add to orders
 
+            //also insert our order into analytics for later admin usage
+            const analyticsEntry = {
+                ...newEntry,
+                orderId: result.insertedId,
+                orderStatus: 'Placed',
+                placedAt: new Date().toISOString()
+            } ;
+            await analyticsCollection.insertOne(analyticsEntry);
 
             console.log(newEntry);
-            const result = await ordersCollection.insertOne(newEntry); //add to orders
             console.log("New order received!");
             res.status(201).json({status: "success", insertedId: result.insertedId});
         } catch (err) {
@@ -104,6 +128,36 @@ nextApp.prepare().then(() => {
         }
 
     });
+
+    //Delete Order Entry by order id (this is for when the order is completed) & update analytics
+    app.delete('/orders/:id', async (req, res) => {
+        const {id} = req.params;
+
+        try {
+            const orderId = new ObjectId(id);
+            const order = await ordersCollection.deleteOne({_id: orderId});
+            if (order.deletedCount === 1) {
+                //Update analytics that order was completed
+                await analyticsCollection.updateOne(
+                    {orderId: orderId},
+                    {
+                        $set: {
+                            orderStatus: 'Completed',
+                            completedAt: new Date().toISOString(),
+                        }
+                    }
+                )
+
+                res.status(200).json({status: 'success', id});
+            } else {
+                res.status(404).json({error: 'Order not found'});
+            }
+        }
+        catch (err) {
+            console.error("Error completing order", err.message);
+            res.status(500).json({error: "Error completing order"});
+        }
+    })
 
     //These 2 bits allow the Next.js to render everything we need, similar to our previous html req's, but the frameworks work differently
     app.get('/', (req, res) => {

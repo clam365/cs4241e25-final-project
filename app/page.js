@@ -40,8 +40,10 @@ export const DrinkItem = ({drink}) => {
             firstName: drinkEntry.get('firstName'),
             drink: drinkEntry.get('drinkType'),
             temp: drinkEntry.get('temp'),
+            price: drink.price,
             milk: drinkEntry.get('milk'),
             sweetness: drinkEntry.get('sweetness'),
+            timestamp: new Date().toISOString(),
             specialInstructions: drinkEntry.get('specialInstructions') || '' //optional comments
         };
 
