@@ -42,7 +42,7 @@ nextApp.prepare().then(() => {
         if (req.session.login === true || isPublicRoute) {
             next();
         } else {
-            // For API routes, return JSON error
+            //finally check
             if (req.path.startsWith('/api/') || isProtectedRoute) {
                 return res.status(401).json({ error: 'You are not logged in.' });
             }
