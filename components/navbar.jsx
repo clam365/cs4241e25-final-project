@@ -68,7 +68,9 @@ export const Navbar = () => {
             <Link href={"/about"} className={onPage("/about")}>about</Link>
             <Link href={"/#contact"} className={onPage("/#contact")}>contact</Link>
             {loggedIn ? (
+
                 <div className="flex items-center gap-x-4">
+                    <Link href={"/admin"} className={onPage("/admin")}>admin</Link>
                     <button onClick={handleLogout} className="text-red-500 hover:underline">logout</button>
                 </div>
             ) : (

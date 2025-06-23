@@ -19,11 +19,36 @@ nextApp.prepare().then(() => {
 
     //MIDDLEWARE for our account access situation
     app.use(function (req, res, next) {
-        //based on the structure of the middleware, css will not go through bc express.static('public') is after. we need to whitelist some files
-        if (req.session.login === true || req.path.startsWith('/css') || req.path.startsWith('/'))
-            next()
-        else
-            res.redirect("/login")
+        //Public Routes
+        const publicRoutes = [
+          '/',
+          '/login',
+          '/about'
+        ];
+
+        //protected routes not accessible, including any API endpoints used in those spaces
+        const protectedRoutes = [
+            '/admin',
+            '/orders',     // API calls for orders collection
+            '/analytics',  // API css for analytics collection
+        ]
+
+        // Check if the current path is public
+        const isPublicRoute = publicRoutes.includes(req.path) || '/_next';
+        // Check if the current path is protected
+        const isProtectedRoute = protectedRoutes.some(route => req.path.startsWith(route));
+
+        // Allow access if user is logged in OR if it's a public route
+        if (req.session.login === true || isPublicRoute) {
+            next();
+        } else {
+            // For API routes, return JSON error
+            if (req.path.startsWith('/api/') || isProtectedRoute) {
+                return res.status(401).json({ error: 'You are not logged in.' });
+            }
+            // For page routes, redirect to login
+            res.redirect("/login");
+        }
     })
 
     // serve up static files in the directory public,
