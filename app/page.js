@@ -18,7 +18,7 @@ export default function Home() {
             {/* drink content */}
             <div className={"grid grid-cols-1 md:grid-cols-3 p-6 md:p-16 gap-8"} id={"order"}>
                 {drinkData.map((drink) => (
-                    <DrinkItem key={drink.id} drink={drink}/>
+                    <DrinkItem key={drink.id} drink={drink} />
                 ))}
             </div>
         </div>
@@ -80,7 +80,7 @@ export const DrinkItem = ({drink}) => {
 
 
     return (
-        <div>
+        <div className={"m-auto"}>
             {/* image from https://www.freepik.com/free-ai-image/delicious-matcha-tea-scene_358281285.htm#fromView=keyword&page=1&position=4&uuid=090c6e9d-da5c-44d4-8a75-6f9f95ea2867&query=Matcha+Latte+Png*/}
             <Image src={drink.image || "/matchaMockup.jpg"} alt={drink.drinkType || "drink"} height={500} width={400} className={"w-[750] h-[500px] object-cover"}/>
             <h1 className={" text-xl mt-4"}>{drink.drinkType}</h1>

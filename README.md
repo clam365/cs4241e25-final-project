@@ -1,5 +1,5 @@
 # Final Project: Northstar Cafe Ordering System
-Link: https://northstar-co.onrender.com
+Link: https://cs4241e25-final-project.onrender.com/
 
 ### Brief Description:
 My final project for this class is a full stack website called northstar.co. It is a digital platform where customers can browse the Northstar Cafe's menu items, place drink orders, and learn about the cafe's story and branding. This is more personal to my friends and I, where we have loved gathering for coffee sessions, and that experience inspired me to create an online space that captures the connections. It will be an extension of the cafe itself: cozy, welcoming, and modern. We recreate the feelings, whether online or in person during this experience.
